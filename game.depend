@@ -1,0 +1,24 @@
+# depslib dependency file v1.0
+1546373320 source:/home/nathan/cpp/game/main.cpp
+	<iostream>
+	<cstdlib>
+	<GL/glut.h>
+	<chrono>
+	<thread>
+	<ctime>
+	<time.h>
+	<cstdlib>
+	"steppers.h"
+
+1546375464 /home/nathan/cpp/game/steppers.h
+
+1546375463 source:/home/nathan/cpp/game/steppers.cpp
+	<cstdlib>
+	"steppers.h"
+
+1546375760 source:/home/nathan/cpp/game/renderer.cpp
+	"renderer.h"
+	<GL/glut.h>
+
+1546375699 /home/nathan/cpp/game/renderer.h
+
