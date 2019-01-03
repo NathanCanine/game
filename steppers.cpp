@@ -1,6 +1,13 @@
 #include <cstdlib>
 #include "steppers.h"
 
+int *die_ranges = [];
+int die_length;
+int *live_ranges = [];
+int live_length;
+int *birth_ranges = [];
+int birth_length;
+
 //This copy's the grid for comparision purposes.
 void CopyGrid (bool **grid,bool **grid2, int x, int y){
     for(int a = 0; a < x; a++){
@@ -8,6 +15,21 @@ void CopyGrid (bool **grid,bool **grid2, int x, int y){
             grid2[a][b] = grid[a][b];
         }
     }
+}
+
+void set_die_ranges(int *die_ranges_arg, int length){
+    die_ranges = die_ranges_arg;
+    die_length = length;
+}
+
+void set_live_ranges(int *live_ranges_arg, int length){
+    live_ranges = live_ranges_arg;
+    live_length = length;
+}
+
+void set_birth_ranges(int *birth_ranges_arg, int length){
+    birth_ranges = birth_ranges_arg;
+    birth_length = length;
 }
 
 //Calculates Life or Death
@@ -30,11 +52,9 @@ void liveOrDie(bool **grid,int x, int y){
                     }
                 }
             }
-            if(!grid2[a][b] && life == 3){
+            if(!grid2[a][b] && should_birth(life)){
                 grid[a][b] = true;
-            } else if(life < 2) {
-                grid[a][b] = false;
-            } else if(life > 3){
+            } else if(should_die(life)) {
                 grid[a][b] = false;
             }
         }
@@ -82,7 +102,7 @@ bool** initialize_grid(int x, int y){
     for (int h = 0; h < x; h++) {
         grid[h] = (bool*) malloc(y*sizeof(bool));
         for( int j = 0;j<y;j++){
-            grid[h][j] = ((rand() % 2)==1);
+            grid[h][j] = ((rand() % 10)==1);
         }
     }
     return grid;

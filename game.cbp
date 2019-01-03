@@ -15,7 +15,7 @@
 					<Add option="-g" />
 				</Compiler>
 				<Linker>
-					<Add option="-lGL -lglut -lGLU" />
+					<Add option="-lGL -lglut -lGLU -lSOIL" />
 				</Linker>
 			</Target>
 			<Target title="Release">
@@ -28,12 +28,16 @@
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
+					<Add option="-lGL -lglut -lGLU -lSOIL" />
 				</Linker>
 			</Target>
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="SOIL.h">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
 		<Unit filename="main.cpp" />
 		<Unit filename="renderer.cpp" />
 		<Unit filename="renderer.h" />
