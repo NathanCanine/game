@@ -1,30 +1,15 @@
 #include <cstdlib>
 #include "steppers.h"
+#include <iostream>
 
-int *die_ranges = [];
-int die_length;
-int *live_ranges = [];
-int live_length;
-int *birth_ranges = [];
-int birth_length;
-
-//This copy's the grid for comparision purposes.
-void CopyGrid (bool **grid,bool **grid2, int x, int y){
-    for(int a = 0; a < x; a++){
-        for(int b = 0; b < y; b++){
-            grid2[a][b] = grid[a][b];
-        }
-    }
-}
+int die_length = 0;
+int *die_ranges= {};
+int *birth_ranges = {};
+int birth_length = 0;
 
 void set_die_ranges(int *die_ranges_arg, int length){
     die_ranges = die_ranges_arg;
     die_length = length;
-}
-
-void set_live_ranges(int *live_ranges_arg, int length){
-    live_ranges = live_ranges_arg;
-    live_length = length;
 }
 
 void set_birth_ranges(int *birth_ranges_arg, int length){
@@ -32,13 +17,26 @@ void set_birth_ranges(int *birth_ranges_arg, int length){
     birth_length = length;
 }
 
-//Calculates Life or Death
-void liveOrDie(bool **grid,int x, int y){
-    bool** grid2= (bool**) malloc(x * sizeof(bool*));
-    for (int h = 0; h < x; h++) {
-        grid2[h] = (bool*) malloc(y*sizeof(bool));
+bool should_die(int life){
+    for (int i=0;i<die_length;i++){
+        if(die_ranges[2*i]<=life && life <= die_ranges[(2*i) + 1]){
+            return true;
+        }
     }
-    CopyGrid(grid, grid2,x,y);
+    return false;
+}
+
+bool should_birth(int life){
+    for (int i=0;i<birth_length;i++){
+        if(birth_ranges[2*i]<=life && life <= birth_ranges[(2*i) + 1]){
+            return true;
+        }
+    }
+    return false;
+}
+
+//Calculates Life or Death
+void step(Tile **grid,int x, int y){
     for(int a = 0; a < x; a++){
         for(int b = 0; b < y; b++){
             int life = 0;
@@ -47,31 +45,28 @@ void liveOrDie(bool **grid,int x, int y){
                     int apc = a+c;
                     int bpd = b+d;
                     if(apc == -1 || apc == x || bpd == -1 || bpd == y || (apc == a && bpd == b)){
-                    } else if (grid2[apc][bpd]){
+                    } else if (grid[apc][bpd].grassy){
                         ++life;
                     }
                 }
             }
-            if(!grid2[a][b] && should_birth(life)){
-                grid[a][b] = true;
+            if(!grid[a][b].grassy && should_birth(life)){
+                grid[a][b].next_grassy = true;
             } else if(should_die(life)) {
-                grid[a][b] = false;
+                grid[a][b].next_grassy = false;
             }
         }
     }
-    for(int i =0;i<x;i++){
-        free(grid2[i]);
+
+    for(int a = 0; a < x; a++){
+        for(int b = 0; b < y; b++){
+            grid[a][b].grassy = grid[a][b].next_grassy;
+        }
     }
-    free(grid2);
 }
 
 //Calculates Life or Death
-void liveOrDieCool(bool **grid,int x, int y){
-    bool** grid2= (bool**) malloc(x * sizeof(bool*));
-    for (int h = 0; h < x; h++) {
-        grid2[h] = (bool*) malloc(y*sizeof(bool));
-    }
-    CopyGrid(grid, grid2,x,y);
+void liveOrDieCool(Tile **grid,int x, int y){
     for(int a = 0; a < x; a++){
         for(int b = 0; b < y; b++){
             int life = 0;
@@ -81,28 +76,29 @@ void liveOrDieCool(bool **grid,int x, int y){
                     int bpd = b+d;
                     if(apc == -1 || apc == x || bpd == -1 || bpd == y){
 
-                    } else if (grid[apc][bpd]){
+                    } else if (grid[apc][bpd].grassy){
                         ++life;
                     }
                 }
             }
             if(life < 2) {
-                grid[a][b] = false;
+                grid[a][b].grassy = false;
             } else if(life == 3){
-                grid[a][b] = true;
+                grid[a][b].grassy = true;
             } else if(life > 3){
-                grid[a][b] = false;
+                grid[a][b].grassy = false;
             }
         }
     }
 }
 
-bool** initialize_grid(int x, int y){
-    bool** grid= (bool**) malloc(x * sizeof(bool*));
+Tile** initialize_grid(int x, int y, int mod){
+    Tile** grid= (Tile**) malloc(x * sizeof(Tile*));
     for (int h = 0; h < x; h++) {
-        grid[h] = (bool*) malloc(y*sizeof(bool));
+        grid[h] = (Tile*) malloc(y*sizeof(Tile));
         for( int j = 0;j<y;j++){
-            grid[h][j] = ((rand() % 10)==1);
+            Tile t((rand() % mod)==1);
+            grid[h][j] = t;
         }
     }
     return grid;

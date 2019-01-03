@@ -38,6 +38,8 @@
 		<Unit filename="SOIL.h">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
+		<Unit filename="entity.cpp" />
+		<Unit filename="entity.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="renderer.cpp" />
 		<Unit filename="renderer.h" />

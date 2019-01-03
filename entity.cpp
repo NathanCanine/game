@@ -8,5 +8,23 @@ Entity::Entity(int x,int y)
 
 int Entity::getSum()
 {
-  return gx + gy;
+  return xpos + ypos;
+}
+
+Tile::Tile(bool is_grassy)
+{
+  grassy = is_grassy;
+}
+
+void Tile::setGrassy(bool is_grassy){
+    grassy = is_grassy;
+}
+
+
+void Tile::setNextGrassy(bool will_grassy){
+    next_grassy = will_grassy;
+}
+
+bool Tile::getGrassy(){
+  return grassy;
 }

@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1546400213 source:/home/nathan/cpp/game/main.cpp
+1546499400 source:/home/nathan/cpp/game/main.cpp
 	<iostream>
 	<cstdlib>
 	<GL/glut.h>
@@ -11,12 +11,15 @@
 	"steppers.h"
 	"renderer.h"
 	"SOIL.h"
+	"entity.h"
 
-1546375464 /home/nathan/cpp/game/steppers.h
+1546498374 /home/nathan/cpp/game/steppers.h
+	"entity.h"
 
-1546383943 source:/home/nathan/cpp/game/steppers.cpp
+1546499618 source:/home/nathan/cpp/game/steppers.cpp
 	<cstdlib>
 	"steppers.h"
+	<iostream>
 
 1546378869 source:/home/nathan/cpp/game/renderer.cpp
 	"renderer.h"
@@ -25,4 +28,9 @@
 1546377573 /home/nathan/cpp/game/renderer.h
 
 1546384502 /home/nathan/cpp/game/SOIL.h
+
+1546499649 source:/home/nathan/cpp/game/entity.cpp
+	"entity.h"
+
+1546499656 /home/nathan/cpp/game/entity.h
 
