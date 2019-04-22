@@ -35,9 +35,7 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
-		<Unit filename="SOIL.h">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
+		<Unit filename="SOIL.h" />
 		<Unit filename="entity.cpp" />
 		<Unit filename="entity.h" />
 		<Unit filename="main.cpp" />
@@ -45,6 +43,8 @@
 		<Unit filename="renderer.h" />
 		<Unit filename="steppers.cpp" />
 		<Unit filename="steppers.h" />
+		<Unit filename="tile.cpp" />
+		<Unit filename="tile.h" />
 		<Extensions>
 			<code_completion />
 			<debugger />

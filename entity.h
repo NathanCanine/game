@@ -1,25 +1,38 @@
 #ifndef ENTITY_H_INCLUDED
 #define ENTITY_H_INCLUDED
 
+struct Point{
+    int x=0;
+    int y=0;
+    int type = 0;
+};
+
+struct Projection{
+    Point points[25] ;
+    int length=0;
+};
+
 class Entity
 {
-  int xpos = -1;
-  int ypos = -1;
+private:
+  int id;
+  struct Projection *projection;
+  struct Point *points;
+  bool projected;
 public:
-  Entity(int x,int y);
-  int getSum ();
+  int interactions;
+  bool resolved;
+  bool resolve();
+  void reset();
+  int entity_type = -1;
+  Entity();
+  void interact();
+  void act(Entity** locals, int local_pop, Entity** projectors, int projecting);
+  int place(Entity** locals, int local_pop, Entity** projectors, int projecting);
+  Projection project();
+  int num_projection();
+  void plan();
+  int get_id();
+  void set_id(int i);
 };
-
-
-class Tile
-{
-public:
-  bool grassy = 0;
-  bool next_grassy = 0;
-  Tile(bool is_grassy);
-  void setGrassy (bool is_grassy);
-  void setNextGrassy(bool will_grassy);
-  bool getGrassy ();
-};
-
 #endif // ENTITY_H_INCLUDED
